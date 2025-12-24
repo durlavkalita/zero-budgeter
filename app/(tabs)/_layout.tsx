@@ -1,23 +1,23 @@
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import Colors from '@/constants/Colors';
+import { useThemeColor } from '@/components/Themed';
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform, StyleSheet, useColorScheme } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  const activeColor = Colors[colorScheme ?? 'light'].tint;
+  const activeColor = useThemeColor({}, 'tint');
+  const backgroundColor = useThemeColor({}, 'background');
+  const textColor = useThemeColor({}, 'text');
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: activeColor,
         tabBarInactiveTintColor: '#8E8E93',
-        headerShown: useClientOnlyValue(false, true),
+        headerShown: true,
         tabBarStyle: {
           ...styles.tabBar,
-          backgroundColor: colorScheme === 'dark' ? '#1C1C1E' : '#FFFFFF',
+          backgroundColor: '#1C1C1E',
           borderTopWidth: 0,
           elevation: 10,
           shadowColor: '#000',
@@ -32,6 +32,14 @@ export default function TabLayout() {
         },
         tabBarIconStyle: {
           marginTop: 5,
+        },
+        headerStyle: {
+          backgroundColor: backgroundColor,
+        },
+        headerTitleStyle: {
+          fontWeight: '600',
+          color: textColor,
+          paddingHorizontal: 24
         },
       }}>
       <Tabs.Screen
@@ -48,7 +56,6 @@ export default function TabLayout() {
         name="transactions"
         options={{
           title: 'Activity',
-          headerShown: true,
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? "list" : "list-outline"} size={24} color={color} />
           ),
@@ -58,7 +65,6 @@ export default function TabLayout() {
         name="accounts"
         options={{
           title: 'Accounts',
-          headerShown: true,
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? "wallet" : "wallet-outline"} size={24} color={color} />
           ),
@@ -68,7 +74,6 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: 'Settings',
-          headerShown: true,
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? "settings" : "settings-outline"} size={24} color={color} />
           ),

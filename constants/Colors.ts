@@ -1,26 +1,23 @@
-const tintColorLight = '#6366f1'; // Indigo-600
-const tintColorDark = '#818cf8';  // Indigo-400
-
 export default {
   light: {
     text: '#0f172a',
     background: '#f8fafc',
-    tint: tintColorLight,
+    tint: '#6366f1',
     tabIconDefault: '#94a3b8',
-    tabIconSelected: tintColorLight,
-    surface: '#ffffff',      // Card backgrounds
-    success: '#10b981',      // Money available
-    danger: '#ef4444',       // Overspent
+    tabIconSelected: '#6366f1',
+    surface: '#ffffff',
+    success: '#10b981',
+    danger: '#ef4444',
     border: '#e2e8f0',
     muted: '#64748b',
   },
   dark: {
     text: '#f8fafc',
-    background: '#020617',   // Deeper than pure black
-    tint: tintColorDark,
+    background: '#020617',
+    tint: '#818cf8',
     tabIconDefault: '#475569',
-    tabIconSelected: tintColorDark,
-    surface: '#0f172a',      // Slate-900
+    tabIconSelected: '#818cf8',
+    surface: '#0f172a',
     success: '#34d399',
     danger: '#f87171',
     border: '#1e293b',

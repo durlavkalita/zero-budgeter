@@ -1,10 +1,10 @@
 import AddAccountModal from '@/components/modals/AddAccountModal';
-import { useThemeColor } from '@/components/Themed';
+import { Text, useThemeColor, View } from '@/components/Themed';
 import { useAccounts } from '@/hooks/budgetHooks';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function AccountsScreen() {
     const router = useRouter();
@@ -15,6 +15,7 @@ export default function AccountsScreen() {
     const surfaceColor = useThemeColor({}, 'surface');
     const mutedColor = useThemeColor({}, 'muted');
     const textColor = useThemeColor({}, 'text');
+    const backgroundColor = useThemeColor({}, 'background');
 
     // Calculate total across all accounts
     const totalBalance = accounts?.reduce((sum, acc) => sum + acc.balance, 0) ?? 0;

@@ -138,20 +138,20 @@ export default function TransactionModal() {
             {/* Type Toggle */}
             <View style={styles.toggleRow}>
                 <TouchableOpacity
-                    style={[styles.typeBtn, selectedType === 'expense' && { backgroundColor: dangerColor }]}
+                    style={[styles.typeBtn, selectedType === 'expense' ? { backgroundColor: dangerColor } : { backgroundColor: mutedColor }]}
                     onPress={() => setSelectedType('expense')}
                 >
                     <Text style={styles.typeText}>Expense</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles.typeBtn, selectedType === 'income' && { backgroundColor: successColor }]}
+                    style={[styles.typeBtn, selectedType === 'income' ? { backgroundColor: successColor } : { backgroundColor: mutedColor }]}
                     onPress={() => setSelectedType('income')}
                 >
                     <Text style={styles.typeText}>Income</Text>
                 </TouchableOpacity>
                 {!isEditing && (
                     <TouchableOpacity
-                        style={[styles.typeBtn, selectedType === 'transfer' && { backgroundColor: tintColor }]}
+                        style={[styles.typeBtn, selectedType === 'transfer' ? { backgroundColor: tintColor } : { backgroundColor: mutedColor }]}
                         onPress={() => setSelectedType('transfer')}
                     >
                         <Text style={styles.typeText}>Transfer</Text>
@@ -161,7 +161,7 @@ export default function TransactionModal() {
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.amountWrapper}>
-                    <Text style={[styles.currency, { color: selectedType === 'expense' ? dangerColor : successColor }]}>$</Text>
+                    <Text style={[styles.currency, { color: selectedType === 'expense' ? dangerColor : selectedType === 'income' ? successColor : tintColor }]}>$</Text>
                     <TextInput
                         style={[styles.mainInput, { color: textColor }]}
                         placeholder="0.00"

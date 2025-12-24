@@ -1,4 +1,4 @@
-import { Text, View, useThemeColor } from '@/components/Themed';
+import { Text, useThemeColor, View } from '@/components/Themed';
 import { useAccounts, useAddTransaction, useTransactions } from '@/hooks/budgetHooks';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
@@ -24,6 +24,7 @@ export default function AccountDetailScreen() {
     const successColor = useThemeColor({}, 'success');
     const textColor = useThemeColor({}, 'text');
     const borderColor = useThemeColor({}, 'border');
+    const backgroundColor = useThemeColor({}, 'background');
 
     // 1. Find this specific account
     const account = useMemo(() => {
@@ -34,39 +35,6 @@ export default function AccountDetailScreen() {
     const history = useMemo(() => {
         return allTransactions?.filter(t => t.accountId === Number(id)) || [];
     }, [allTransactions, id]);
-
-    const handleReconcile = () => {
-        Alert.prompt(
-            "Reconcile Account",
-            `Current app balance: $${account?.balance.toFixed(2)}. What is your actual bank balance right now?`,
-            [
-                { text: "Cancel", style: "cancel" },
-                {
-                    text: "Adjust Balance",
-                    onPress: (value?: string) => {
-                        const actualBalance = parseFloat(value || "");
-
-                        // Safety check for NaN or empty input
-                        if (isNaN(actualBalance)) {
-                            Alert.alert("Invalid Input", "Please enter a valid number for the balance.");
-                            return;
-                        }
-
-                        const difference = actualBalance - (account?.balance || 0);
-
-                        if (Math.abs(difference) < 0.01) { // Handle tiny float rounding
-                            Alert.alert("Perfect!", "Your balances already match.");
-                            return;
-                        }
-
-                        createAdjustment(difference);
-                    },
-                },
-            ],
-            "plain-text",
-            ""
-        );
-    };
 
     const createAdjustment = (diff: number) => {
         addTx.mutate({
@@ -91,9 +59,6 @@ export default function AccountDetailScreen() {
         <View style={styles.container}>
             {/* Header / Hero Section */}
             <View style={[styles.hero, { backgroundColor: surfaceColor }]}>
-                <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
-                    <Ionicons name="chevron-back" size={28} color={tintColor} />
-                </TouchableOpacity>
 
                 <Text style={[styles.label, { color: mutedColor }]}>{account.name} Balance</Text>
                 <Text style={[styles.balance, { color: account.balance < 0 ? dangerColor : tintColor }]}>
@@ -154,6 +119,7 @@ export default function AccountDetailScreen() {
                     }
                 />
             </View>
+
             <Modal
                 visible={isReconcileVisible}
                 transparent
@@ -209,7 +175,7 @@ const styles = StyleSheet.create({
     container: { flex: 1 },
     hero: {
         padding: 24,
-        paddingTop: 60,
+        paddingTop: 40,
         alignItems: 'center',
         borderBottomLeftRadius: 32,
         borderBottomRightRadius: 32,

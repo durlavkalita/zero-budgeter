@@ -61,9 +61,6 @@ export default function CategoryDetailScreen() {
         <View style={styles.container}>
             {/* Header / Hero Section */}
             <View style={[styles.hero, { backgroundColor: surfaceColor }]}>
-                <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
-                    <Ionicons name="chevron-back" size={28} color={tintColor} />
-                </TouchableOpacity>
 
                 <Text style={[styles.label, { color: mutedColor }]}>{envelope.name} Available</Text>
                 <Text style={styles.balance}>${envelope.available.toLocaleString()}</Text>
@@ -116,7 +113,7 @@ const styles = StyleSheet.create({
     container: { flex: 1 },
     hero: {
         padding: 24,
-        paddingTop: 60,
+        paddingTop: 40,
         alignItems: 'center',
         borderBottomLeftRadius: 32,
         borderBottomRightRadius: 32,

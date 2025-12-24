@@ -1,7 +1,7 @@
 import AddAccountModal from '@/components/modals/AddAccountModal';
 import AddEnvelopeModal from '@/components/modals/AddEnvelopeModal';
 import DistributeFundsModal from '@/components/modals/DistributeFundsModal';
-import { useThemeColor } from '@/components/Themed';
+import { Text, useThemeColor, View } from '@/components/Themed';
 import { useAccounts, useBudgetSummary, useCategories } from '@/hooks/budgetHooks';
 import { Ionicons } from '@expo/vector-icons';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -11,9 +11,7 @@ import React, { useState } from 'react';
 import {
     ScrollView,
     StyleSheet,
-    Text,
     TouchableOpacity,
-    View
 } from 'react-native';
 import Animated, { FadeInDown, FadeInUp, Layout } from 'react-native-reanimated';
 
@@ -35,6 +33,7 @@ export default function Index() {
     const tintColor = useThemeColor({}, 'tint');
     const mutedColor = useThemeColor({}, 'muted');
     const textColor = useThemeColor({}, 'text');
+    const backgroundColor = useThemeColor({}, 'background');
 
     const isOverdrawn = (summary?.readyToAssign ?? 0) < 0;
 
@@ -63,7 +62,7 @@ export default function Index() {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: backgroundColor }]}>
 
             {/* 1. HERO SECTION: Ready to Assign */}
             <Animated.View
@@ -96,13 +95,13 @@ export default function Index() {
                 </View>
 
                 {/* 3. ENVELOPES (CATEGORIES) */}
-                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: "#0f172a" }}>
-                    <Text style={styles.sectionHeader}>Envelopes</Text>
+                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: backgroundColor }}>
+                    <Text style={[styles.sectionHeader, { color: textColor }]}>Envelopes</Text>
                     <TouchableOpacity
                         style={[styles.addFirstBtn, { borderColor: tintColor }]}
                         onPress={() => setEnvelopeModalVisible(true)}
                     >
-                        <AntDesign name='plus' color="white" size={18} />
+                        <AntDesign name='plus' color={textColor} size={18} />
                     </TouchableOpacity>
                 </View>
                 {groupedCategories && groupedCategories.length > 0
@@ -131,8 +130,8 @@ export default function Index() {
                                         onPress={() => router.push({ pathname: `/category/[id]`, params: { id: category.id } })}
                                     >
                                         <View style={styles.envelopeHeader}>
-                                            <Text style={styles.envelopeName}>{category.name}</Text>
-                                            <Text style={styles.envelopeAmount}>${category.available.toLocaleString()}</Text>
+                                            <Text style={[styles.envelopeName, { color: textColor }]}>{category.name}</Text>
+                                            <Text style={[styles.envelopeAmount, { color: textColor }]}>${category.available.toLocaleString()}</Text>
                                         </View>
 
                                         {/* Progress Visual */}
@@ -195,7 +194,7 @@ export default function Index() {
 const StatCard = ({ label, value, icon }: any) => (
     <View style={styles.statCard}>
         <View style={styles.statIcon}>{icon}</View>
-        <View>
+        <View style={{ backgroundColor: '#1e293b' }}>
             <Text style={styles.statLabel}>{label}</Text>
             <Text style={styles.statValue}>{value}</Text>
         </View>
@@ -205,7 +204,6 @@ const StatCard = ({ label, value, icon }: any) => (
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0f172a',
         paddingTop: 40,
     },
     scrollContent: {
@@ -328,8 +326,8 @@ const styles = StyleSheet.create({
     },
     fab: {
         position: 'absolute',
-        bottom: 80,
-        right: 30,
+        bottom: 100,
+        right: 20,
         backgroundColor: '#6366f1',
         width: 60,
         height: 60,
